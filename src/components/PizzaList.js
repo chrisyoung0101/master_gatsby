@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'gatsby';
+// Here we didn't autoimport and are naming the package Img (I think)
+// Tip : Capitalizing tells us it is a custom component
+import Img from 'gatsby-image';
 
 function SinglePizza({ pizza }) {
   return (
@@ -9,6 +12,7 @@ function SinglePizza({ pizza }) {
           <span className="mark">{pizza.name} </span>
         </h2>
         <p>{pizza.toppings.map((topping) => topping.name).join(', ')}</p>
+        <Img fluid={pizza.image.asset.fluid} alt={pizza.name} />
       </Link>
     </div>
   );

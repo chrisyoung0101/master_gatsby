@@ -29,8 +29,11 @@ export const query = graphql`
         }
         image {
           asset {
+            fixed(width: 200, height: 200) {
+              ...GatsbySanityImageFixed
+            }
             fluid(maxWidth: 400) {
-              #GraphQL fragment : collection of fields that we don't have to retype separately
+              #GraphQL fragment :
               ...GatsbySanityImageFluid
             }
           }
