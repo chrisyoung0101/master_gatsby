@@ -29,8 +29,15 @@ const ContentSytles = styled.div`
 `;
 
 export default function Layout({ children }) {
+  // {children} - if a component has imported Layout it will be available here as props.children
+
+  // {children} here is from gatsby-browser.js which is set up to wrap each Gatsby page component
+  //      aka element in the Layout so that we are not individually importing and wrapping each Gatsby
+  //      page's component in <Layout> </Layout>
+
+  console.dir(children);
   return (
-    <>
+    <Layout>
       <GlobalStyles />
       <Typography />
       <SiteBorderStyles>
@@ -40,6 +47,6 @@ export default function Layout({ children }) {
           <Footer />
         </ContentSytles>
       </SiteBorderStyles>
-    </>
+    </Layout>
   );
 }

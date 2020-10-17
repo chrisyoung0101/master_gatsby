@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql, useStaticQuery, Link } from 'gatsby';
 import styled from 'styled-components';
 
+// Styled Component
 const ToppingsStyles = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -25,6 +26,7 @@ const ToppingsStyles = styled.div`
   }
 `;
 
+//
 function countPizzasInToppings(pizzas) {
   // Return pizzas with counts
   const counts = pizzas
@@ -76,7 +78,7 @@ export default function ToppingsFilter() {
       }
     }
   `);
-  console.clear();
+
   // Count how many pizzas are in each topping
   const toppingsWithCounts = countPizzasInToppings(pizzas.nodes);
 
@@ -94,4 +96,4 @@ export default function ToppingsFilter() {
       ))}
     </ToppingsStyles>
   );
-}
+} // End ToppingsFilter

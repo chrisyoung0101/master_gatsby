@@ -3,6 +3,7 @@ import { Link } from 'gatsby';
 import Img from 'gatsby-image';
 import styled from 'styled-components';
 
+// Styled Component
 const PizzaGridStyles = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -10,6 +11,7 @@ const PizzaGridStyles = styled.div`
   grid-auto-rows: auto auto 500px;
 `;
 
+// Styled Component
 const PizzaStyles = styled.div`
   display: grid;
   /*Take your row sizing not from the PizzaStyles <div> but from 
@@ -26,6 +28,7 @@ const PizzaStyles = styled.div`
   }
 `;
 
+// Component for one pizza
 function SinglePizza({ pizza }) {
   return (
     <PizzaStyles>
@@ -40,6 +43,7 @@ function SinglePizza({ pizza }) {
   );
 }
 
+// Renders out a list of pizzas
 export default function PizzasList({ pizzas }) {
   return (
     <PizzaGridStyles>

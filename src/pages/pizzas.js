@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import PizzasList from '../components/PizzaList';
 import ToppingsFilter from '../components/ToppingsFilter';
 
+// PizzasList handles displaying the pizzas
 export default function PizzasPage({ data }) {
   const pizzas = data.pizzas.nodes;
   return (

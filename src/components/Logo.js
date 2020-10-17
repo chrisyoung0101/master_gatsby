@@ -98,6 +98,7 @@ const LogoStyles = styled.div`
   }
 `;
 
+// Takes the above styling and applies below.
 export default function Logo() {
   return (
     <LogoStyles className="logo">
