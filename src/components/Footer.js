@@ -4,7 +4,7 @@ import React from 'react';
 export default function Footer(fullYear) {
   return (
     <footer>
-      {/* <p>&copy; Slicks's Slices {new Date().getFullYear}</p> */}
+      <p>&copy; Slicks's Slices {new Date().getFullYear()}</p>
     </footer>
   );
 }

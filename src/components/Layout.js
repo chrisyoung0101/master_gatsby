@@ -37,7 +37,7 @@ export default function Layout({ children }) {
 
   console.dir(children);
   return (
-    <Layout>
+    <>
       <GlobalStyles />
       <Typography />
       <SiteBorderStyles>
@@ -47,6 +47,6 @@ export default function Layout({ children }) {
           <Footer />
         </ContentSytles>
       </SiteBorderStyles>
-    </Layout>
+    </>
   );
 }
