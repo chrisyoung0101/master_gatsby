@@ -26,7 +26,6 @@ async function turnPizzasIntoPages({ graphql, actions }) {
       path: `pizza/${pizza.slug.current}`,
       component: pizzaTemplate,
       context: {
-        bob: 'is a cat',
         slug: pizza.slug.current,
       },
     });
