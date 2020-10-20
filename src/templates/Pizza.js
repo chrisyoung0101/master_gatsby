@@ -8,7 +8,7 @@ const PizzaGrid = styled.div`
   grid-gap: 2rem;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 `;
-
+// Template for creating single pizza page when pizza selected from Pizza Menu
 export default function SinglePizzaPage({ data: { pizza } }) {
   return (
     <PizzaGrid>

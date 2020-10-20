@@ -18,7 +18,7 @@ async function turnPizzasIntoPages({ graphql, actions }) {
       }
     }
   `);
-  console.log(data); // must restart gatsby project
+  // console.log(data); // must restart gatsby project
   // 3. Loop over each pizza and create a page for that pizza with actions.createPage()
   data.pizzas.nodes.forEach((pizza) => {
     actions.createPage({
@@ -34,12 +34,47 @@ async function turnPizzasIntoPages({ graphql, actions }) {
   }); // using forEach because we are not returning anything & just doing work with some data
 }
 
+// destructure graphql & actions from params
+async function turnToppingsIntoPages({ graphql, actions }) {
+  console.log(`Turning the Toppings into Pages!!!`);
+  // 1. Get the template
+  const toppingTemplate = path.resolve('./src/pages/pizzas.js');
+  // 2. Query all the toppings
+  const { data } = await graphql(`
+    query {
+      toppings: allSanityTopping {
+        nodes {
+          name
+          id
+        }
+      }
+    }
+  `);
+  // 3. createPage for that topping by looping over the topping and creating a page for the topping
+  data.toppings.nodes.forEach((topping) => {
+    console.log(`Creating page for topping`, topping.name);
+    actions.createPage({
+      path: `topping/${topping.name}`,
+      component: toppingTemplate,
+      context: {
+        topping: topping.name,
+        toppingRegex: `/${topping.name}/i`,
+      },
+    });
+  });
+  // 4. Pass topping data to pizza.js
+}
+
 // createPages is a specific function name from the API
 export async function createPages(params) {
   // console.log here shows in the terminal build
   // Create pages dynamically
+  // Wait for all promises to be resolved before finishing this function
+  await Promise.all([
+    turnPizzasIntoPages(params),
+    turnToppingsIntoPages(params),
+  ]);
   // 1. Pizzas
-  await turnPizzasIntoPages(params);
   // 2. Toppings
   // 3. Slicemasters
 }

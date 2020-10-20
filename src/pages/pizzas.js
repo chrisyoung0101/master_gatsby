@@ -3,12 +3,12 @@ import { graphql } from 'gatsby';
 import PizzasList from '../components/PizzaList';
 import ToppingsFilter from '../components/ToppingsFilter';
 
-// PizzasList handles displaying the pizzas
-export default function PizzasPage({ data }) {
+// pizzas.js / PizzasPage() handles displaying the ToppingsFilter & Pizza grid / list
+export default function PizzasPage({ data, pageContext }) {
   const pizzas = data.pizzas.nodes;
   return (
     <>
-      <ToppingsFilter />
+      <ToppingsFilter activeTopping={pageContext.topping} />
       <PizzasList pizzas={pizzas} />
     </>
   );
@@ -17,9 +17,12 @@ export default function PizzasPage({ data }) {
 // name it what you like but there is most likely a convention
 export const query = graphql`
   #name the query or not
-  query PizzaQuery {
+  query PizzaQuery($toppingRegex: String) {
     #rename to pizzas
-    pizzas: allSanityPizza {
+    pizzas: allSanityPizza(
+      #filter allSanityPizza for toppings that match the element with the name ...
+      filter: { toppings: { elemMatch: { name: { regex: $toppingRegex } } } }
+    ) {
       nodes {
         name
         id
