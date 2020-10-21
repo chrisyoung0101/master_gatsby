@@ -9,6 +9,7 @@ const PizzaGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 `;
 // Template for creating single pizza page when pizza selected from Pizza Menu
+// { data: { pizza } } is an example of destructuring two levels deep
 export default function SinglePizzaPage({ data: { pizza } }) {
   return (
     <PizzaGrid>

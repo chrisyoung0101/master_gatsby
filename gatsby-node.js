@@ -1,4 +1,5 @@
 import path from 'path'; // node API
+import fetch from 'isomorphic-fetch';
 
 async function turnPizzasIntoPages({ graphql, actions }) {
   // 1. Get a template for this page
@@ -36,7 +37,7 @@ async function turnPizzasIntoPages({ graphql, actions }) {
 
 // destructure graphql & actions from params
 async function turnToppingsIntoPages({ graphql, actions }) {
-  console.log(`Turning the Toppings into Pages!!!`);
+  // console.log(`Turning the Toppings into Pages!!!`);
   // 1. Get the template
   const toppingTemplate = path.resolve('./src/pages/pizzas.js');
   // 2. Query all the toppings
@@ -52,7 +53,7 @@ async function turnToppingsIntoPages({ graphql, actions }) {
   `);
   // 3. createPage for that topping by looping over the topping and creating a page for the topping
   data.toppings.nodes.forEach((topping) => {
-    console.log(`Creating page for topping`, topping.name);
+    // console.log(`Creating page for topping`, topping.name);
     actions.createPage({
       path: `topping/${topping.name}`,
       component: toppingTemplate,
@@ -63,6 +64,50 @@ async function turnToppingsIntoPages({ graphql, actions }) {
     });
   });
   // 4. Pass topping data to pizza.js
+}
+
+async function fetchBeersAndTurnIntoNodes({
+  actions,
+  createNodeId, // provides us a unique ID.  We get this from Gatsby
+  createContentDigest,
+}) {
+  // For 1, 2, & 3, all we are doing is 1. getting the data 2. looping over the data
+  // & (I think 2 & 3 do this) put the data in GraphQL API for you
+  // 1. Fetch a list of beers.  res = response
+  const res = await fetch('https://sampleapis.com/beers/api/ale');
+  // we assume that "res" above returns some JSON so here we turn it into JSON
+  const beers = await res.json();
+  console.log(beers);
+  // 2. Loop over each one  Note: we could use a forEach loop but here he wants to show a for of loop
+  for (const beer of beers) {
+    // create a node for each beer
+    // provide metadata to this node
+    const nodeMeta = {
+      id: createNodeId(`beer-${beer.name}`),
+      parent: null,
+      children: [],
+      // internal subobject
+      internal: {
+        // specifies our query name
+        type: 'Beer',
+        // allows other plugins to find the type of media they might be looking for
+        mediaType: 'application/json',
+        // internal thing with Gatsby so it knows if the data has changed or not
+        contentDigest: createContentDigest(beer),
+      },
+    };
+    // 3. Create a node for that beer
+    actions.createNode({
+      ...beer,
+      ...nodeMeta,
+    });
+  }
+}
+
+export async function sourceNodes(params) {
+  // fetch a list of beers and source them into our gatsby API
+  // Note: just adding Promise.all now in the expectation we will be adding more asyn funcs here later
+  await Promise.all([fetchBeersAndTurnIntoNodes(params)]);
 }
 
 // createPages is a specific function name from the API
