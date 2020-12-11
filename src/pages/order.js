@@ -18,18 +18,31 @@ export default function OrderPage({ data }) {
     // must explicitly set the defaults of whatever inputs we have
     name: '',
     email: '',
+    mapleSyrup: '',
   });
   // bring in functionality of custom hook usePizza as well as passing in our pizzas and inputs
-  const { order, addToOrder, removeFromOrder } = usePizza({
+  const {
+    order,
+    addToOrder,
+    removeFromOrder,
+    error,
+    loading,
+    message,
+    submitOrder,
+  } = usePizza({
     pizzas,
-    inputs: values,
+    values,
   });
+  // if there is a message, return the message and ignore everything else
+  if (message) {
+    return <p>{message}</p>;
+  }
 
   return (
     <>
       <SEO title="Order a Pizza!" />
-      <OrderStyles>
-        <fieldset>
+      <OrderStyles onSubmit={submitOrder}>
+        <fieldset disabled={loading}>
           <legend>Your Info</legend>
           {/* TODO : trying to fix this error in the labels here.  We added id to both and need to nest them.  How? */}
           <label htmlFor="name">Name</label>
@@ -48,8 +61,17 @@ export default function OrderPage({ data }) {
             value={values.email}
             onChange={updateValue}
           />
+
+          <input
+            type="mapleSyrup"
+            name="mapleSyrup"
+            id="mapleSyrup"
+            value={values.mapleSyrup}
+            onChange={updateValue}
+            className="mapleSyrup"
+          />
         </fieldset>
-        <fieldset className="menu">
+        <fieldset disabled={loading} className="menu">
           <legend>Menu</legend>
           {pizzas.map((pizza) => (
             <MenuItemStyles key={pizza.id}>
@@ -70,6 +92,7 @@ export default function OrderPage({ data }) {
                 {['S', 'M', 'L'].map((size) => (
                   <button
                     type="button"
+                    key={size}
                     onClick={() =>
                       addToOrder({
                         id: pizza.id,
@@ -84,7 +107,7 @@ export default function OrderPage({ data }) {
             </MenuItemStyles>
           ))}
         </fieldset>
-        <fieldset className="order">
+        <fieldset disabled={loading} className="order">
           <legend>Order</legend>
           {/* order ties to usePizza above  */}
           {/* we have to bring in removeFromOrder because this way it will bind to our list of state.
@@ -111,7 +134,14 @@ export default function OrderPage({ data }) {
           <h3>
             Your Total is {formatMoney(calculateOrderTotal(order, pizzas))}
           </h3>
-          <button type="submit">Order Ahead</button>
+          {/* If there's an error show it otherwise show nothing */}
+          {error ? <p>Error: {error}</p> : ''}
+          {/* disable the button when loading is true */}
+          {/* handler function lives on usePizza custom hook */}
+          <button type="submit" disabled={loading}>
+            {/* if loading is true show Placing order otherwise show Order Ahead */}
+            {loading ? 'Placing Order...' : 'Order Ahead'}
+          </button>
         </fieldset>
       </OrderStyles>
     </>
