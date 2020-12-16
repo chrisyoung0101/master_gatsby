@@ -19,7 +19,8 @@ async function turnPizzasIntoPages({ graphql, actions }) {
       }
     }
   `);
-  // console.log(data); // must restart gatsby project
+  // console.log('DATA : ');
+  console.log(data.pizzas.nodes); // must restart gatsby project
   // 3. Loop over each pizza and create a page for that pizza with actions.createPage()
   data.pizzas.nodes.forEach((pizza) => {
     actions.createPage({
@@ -165,6 +166,7 @@ export async function sourceNodes(params) {
 // createPages is a specific function name from the API
 export async function createPages(params) {
   // console.log here shows in the terminal build
+  console.log('CREATING PAGES');
   // Create pages dynamically
   // Wait for all promises to be resolved before finishing this function
   await Promise.all([
