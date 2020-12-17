@@ -5,7 +5,7 @@ import useLatestData from '../utils/useLatestData';
 import ItemGrid from '../components/ItemGrid';
 
 function CurrentlySlicing({ slicemasters }) {
-  console.log(slicemasters);
+  // console.log(slicemasters);
   return (
     <div>
       <h2 className="center">
@@ -29,7 +29,7 @@ function CurrentlySlicing({ slicemasters }) {
 
 // for the conditional logic here, we just mirror what we did with CurrentlySlicing
 function HotSlices({ hotslices }) {
-  console.log(hotslices);
+  // console.log(hotslices);
   return (
     <div>
       <h2 className="center">

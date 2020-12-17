@@ -35,7 +35,7 @@ export default function Layout({ children }) {
   //      aka element in the Layout so that we are not individually importing and wrapping each Gatsby
   //      page's component in <Layout> </Layout>
 
-  console.dir(children);
+  // console.dir(children);
   return (
     <>
       <GlobalStyles />

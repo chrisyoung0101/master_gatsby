@@ -20,7 +20,7 @@ async function turnPizzasIntoPages({ graphql, actions }) {
     }
   `);
   // console.log('DATA : ');
-  console.log(data.pizzas.nodes); // must restart gatsby project
+  // console.log(data.pizzas.nodes); // must restart gatsby project
   // 3. Loop over each pizza and create a page for that pizza with actions.createPage()
   data.pizzas.nodes.forEach((pizza) => {
     actions.createPage({
@@ -78,7 +78,7 @@ async function fetchBeersAndTurnIntoNodes({
   const res = await fetch('https://sampleapis.com/beers/api/ale');
   // we assume that "res" above returns some JSON so here we turn it into JSON
   const beers = await res.json();
-  console.log(beers);
+  // console.log(beers);
   // 2. Loop over each one  Note: we could use a forEach loop but here he wants to show a for of loop
   for (const beer of beers) {
     // create a node for each beer
@@ -139,11 +139,11 @@ async function turnSlicemastersIntoPages({ graphql, actions }) {
   const pageSize = parseInt(process.env.GATSBY_PAGE_SIZE);
   /// //////take how many people there are divided by how many people per page, round up
   const pageCount = Math.ceil(data.slicemasters.totalCount / pageSize);
-  console.log(`There are ${data.slicemasters.totalCount} total people.  
-    And we have ${pageCount} pages with ${pageSize} per page`);
+  // console.log(`There are ${data.slicemasters.totalCount} total people.
+  // And we have ${pageCount} pages with ${pageSize} per page`);
   // 4. Loop from 1 to n and create the pages for each of them
   Array.from({ length: pageCount }).forEach((_, i) => {
-    console.log(`Creating page ${i}`);
+    // console.log(`Creating page ${i}`);
     actions.createPage({
       path: `/slicemasters/${i + 1}`,
       component: path.resolve('./src/pages/slicemasters.js'),
